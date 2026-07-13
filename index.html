@@ -24,19 +24,25 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
-        /* 커스텀 마우스 커서 적용을 위해 기본 커서 숨김 */
-        html, body {
-            cursor: none;
+        /* 커스텀 마우스 커서 적용을 위해 기본 커서 숨김 (모바일/태블릿 등 터치 환경에서는 자동 제외 처리) */
+        @media (min-width: 768px) {
+            html, body {
+                cursor: none;
+            }
+        }
+        /* [버그 수정] 모달 팝업창 내부의 모든 요소 및 입력창에서는 원래 마우스 커서가 정상 작동하도록 강제 설정 */
+        #detailModal, #detailModal * {
+            cursor: auto !important;
         }
     </style>
     <script>
         tailwind.config = {
-            darkMode: 'class', // Tailwind 다크모드를 활성화합니다.
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        hrd: '#FF6B6B', // HRD 테마: 따뜻한 코랄/로즈
-                        it: '#4D96FF',  // IT 테마: 시원한 블루
+                        hrd: '#FF6B6B',
+                        it: '#4D96FF',
                     }
                 }
             }
@@ -45,74 +51,74 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen selection:bg-indigo-100 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300">
     
-    <button id="dark-mode-toggle" class="fixed top-4 right-4 z-50 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-3 rounded-full shadow-lg hover:scale-110 transition-transform font-bold">
+    <button id="dark-mode-toggle" class="fixed bottom-6 right-6 md:bottom-auto md:top-4 md:right-4 z-50 bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 p-3 rounded-full shadow-xl hover:scale-110 transition-transform font-bold text-sm md:text-base">
     🌓 모드 변경
     </button>
     <div id="custom-cursor" class="fixed w-6 h-6 bg-indigo-500 rounded-full pointer-events-none z-50 opacity-50 -translate-x-1/2 -translate-y-1/2 transition-all duration-75 ease-out hidden md:block"></div>
     <canvas id="particle-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-40 dark:opacity-20"></canvas>
 
     <header class="sticky top-0 z-40 w-full glass-card border-b border-slate-100 dark:bg-slate-900/75 dark:border-slate-800">
-        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-            <span class="font-jakarta font-extrabold text-xl bg-gradient-to-r from-rose-500 to-blue-500 bg-clip-text text-transparent">HYBRID.ME</span>
-            <div class="flex gap-4">
-                <a href="#about" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition">About</a>
-                <a href="#timeline" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition">Timeline</a>
-                <a href="#personality" class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition">Personality</a>
+        <div class="max-w-6xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+            <span class="font-jakarta font-extrabold text-lg md:text-xl bg-gradient-to-r from-rose-500 to-blue-500 bg-clip-text text-transparent">HYBRID.ME</span>
+            <div class="flex gap-3 md:gap-4 md:mr-16">
+                <a href="#about" class="text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition">About</a>
+                <a href="#timeline" class="text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition">Timeline</a>
+                <a href="#personality" class="text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition">Personality</a>
             </div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 py-12 space-y-24">
+    <main class="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12 space-y-16 md:space-y-24">
 
-        <section id="about" class="grid md:grid-cols-12 gap-8 items-center pt-6">
-            <div class="md:col-span-7 space-y-6">
+        <section id="about" class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center pt-4">
+            <div class="md:col-span-7 space-y-4 md:space-y-6 order-2 md:order-1">
                 <span class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-semibold bg-rose-50 text-rose-600 border border-rose-100 dark:bg-rose-950/30 dark:text-rose-400 dark:border-rose-900/50">
                     ✨ HRD × IT 융합 커넥터
                 </span>
                 
-                <h1 class="text-4xl font-bold min-h-[44px]">
+                <h1 class="text-2xl md:text-4xl font-bold min-h-[64px] md:min-h-[44px] leading-tight">
                     <span id="typing-text" class="text-indigo-600 dark:text-indigo-400"></span>
                     <span class="animate-pulse text-indigo-600 dark:text-indigo-400">|</span>
                 </h1>
                 
-                <p class="text-base md:text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+                <p class="text-sm md:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
                     안녕하세요! 저는 교육공학적 관점의 <strong>인재 개발(HRD)</strong> 능력과, 시스템 구조를 분석하고 서비스를 기획하는 <strong>IT 지식</strong>을 동시에 갖춘 하이브리드 인재입니다. 무질서한 지식 속에서 연결고리를 찾아내고 조화롭게 융합하는 능력이 저의 가장 큰 무기입니다.
                 </p>
 
-                <div class="p-5 rounded-2xl border border-slate-100 bg-white shadow-sm max-w-xl dark:bg-slate-800 dark:border-slate-700">
+                <div class="p-4 md:p-5 rounded-2xl border border-slate-100 bg-white shadow-sm max-w-xl dark:bg-slate-800 dark:border-slate-700">
                     <div class="flex justify-between items-center mb-2">
-                        <span class="text-xs font-bold text-hrd uppercase tracking-wider">Human (HRD)</span>
-                        <span class="text-xs font-bold text-slate-400">My Balance</span>
-                        <span class="text-xs font-bold text-it uppercase tracking-wider">Tech (IT)</span>
+                        <span class="text-[10px] md:text-xs font-bold text-hrd uppercase tracking-wider">Human (HRD)</span>
+                        <span class="text-[10px] md:text-xs text-slate-400">My Balance</span>
+                        <span class="text-[10px] md:text-xs font-bold text-it uppercase tracking-wider">Tech (IT)</span>
                     </div>
                     <div class="w-full h-4 bg-gradient-to-r from-hrd via-purple-500 to-it rounded-full relative shadow-inner">
                         <div class="absolute -top-1 left-[60%] w-6 h-6 bg-white rounded-full border-4 border-purple-500 shadow-md transform -translate-x-1/2 flex items-center justify-center dark:bg-slate-800">
                             <div class="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
                         </div>
                     </div>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-3 text-center">
+                    <p class="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 mt-3 text-center">
                         기획/설계 단계의 감수성과 개발/시스템 구축의 이성적 구조화가 <strong>60 : 40</strong>로 공존하는 스펙트럼을 보유하고 있습니다.
                     </p>
                 </div>
             </div>
 
-            <div class="md:col-span-5">
+            <div class="md:col-span-5 order-1 md:order-2">
                 <div class="relative group">
                     <div class="absolute inset-0 bg-gradient-to-tr from-hrd via-pink-400 to-it rounded-3xl blur-2xl opacity-20 group-hover:opacity-30 transition duration-500"></div>
-                    <div class="relative p-8 rounded-3xl border border-slate-100 bg-white shadow-xl space-y-6 dark:bg-slate-800 dark:border-slate-700">
+                    <div class="relative p-6 md:p-8 rounded-3xl border border-slate-100 bg-white shadow-xl space-y-4 md:space-y-6 dark:bg-slate-800 dark:border-slate-700">
                         <div class="flex items-center gap-4">
-                            <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-100 to-blue-100 flex items-center justify-center text-3xl shadow-inner dark:from-rose-900/30 dark:to-blue-900/30">
+                            <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-rose-100 to-blue-100 flex items-center justify-center text-2xl md:text-3xl shadow-inner dark:from-rose-900/30 dark:to-blue-900/30">
                                 💻
                             </div>
                             <div>
-                                <h3 class="font-bold text-xl text-slate-900 dark:text-slate-100">융합 지원자</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">2개의 세계를 잇는 번역가</p>
+                                <h3 class="font-bold text-lg md:text-xl text-slate-900 dark:text-slate-100">융합 지원자</h3>
+                                <p class="text-[11px] text-slate-500 dark:text-slate-400">2개의 세계를 잇는 번역가</p>
                             </div>
                         </div>
-                        <div class="border-t border-slate-100 pt-4 space-y-2 text-sm text-slate-600 dark:border-slate-700 dark:text-slate-300">
-                            <div class="flex justify-between"><span class="font-medium text-slate-400">목표 직무</span> <span class="font-semibold text-slate-900 dark:text-slate-100">컨설턴트님의 최종 조언을 바탕으로 결정!</span></div>
-                            <div class="flex justify-between"><span class="font-medium text-slate-400">희망 도메인</span> <span class="font-semibold text-slate-900 dark:text-slate-100">에듀테크, HR테크, IT 솔루션 기획</span></div>
-                            <div class="flex justify-between"><span class="font-medium text-slate-400">강점 요약</span> <span class="font-semibold text-slate-900 dark:text-slate-100">기획력, 데이터 분석, 협업 오케스트레이션</span></div>
+                        <div class="border-t border-slate-100 pt-4 space-y-2 text-xs md:text-sm text-slate-600 dark:border-slate-700 dark:text-slate-300">
+                            <div class="flex justify-between gap-2"><span class="font-medium text-slate-400 shrink-0">목표 직무</span> <span class="font-semibold text-slate-900 dark:text-slate-100 text-right">컨설턴트님의 최종 조언 기반 결정!</span></div>
+                            <div class="flex justify-between gap-2"><span class="font-medium text-slate-400 shrink-0">희망 도메인</span> <span class="font-semibold text-slate-900 dark:text-slate-100 text-right">에듀테크, HR테크, IT 솔루션 기획</span></div>
+                            <div class="flex justify-between gap-2"><span class="font-medium text-slate-400 shrink-0">강점 요약</span> <span class="font-semibold text-slate-900 dark:text-slate-100 text-right">기획력, 데이터 분석, 협업</span></div>
                         </div>
                     </div>
                 </div>
@@ -120,130 +126,130 @@
         </section>
 
 
-        <section id="timeline" class="space-y-12">
-            <div class="text-center max-w-2xl mx-auto space-y-4">
-                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-slate-100">대표 이력 타임라인 (5대 핵심 성과)</h2>
-                <p class="text-slate-500 dark:text-slate-400">
+        <section id="timeline" class="space-y-8 md:space-y-12">
+            <div class="text-center max-w-2xl mx-auto space-y-3 md:space-y-4">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-slate-100">대표 이력 타임라인 (5대 핵심 성과)</h2>
+                <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 px-2">
                     과거부터 현재까지의 커리어 여정입니다. 각 경험의 <strong class="text-slate-700 dark:text-slate-300">HRD-IT 융합 비중 그라데이션</strong>을 확인해 보세요. 핀을 클릭하면 컨설턴트님께 드리는 상세 정보(STAR)가 펼쳐집니다.
                 </p>
             </div>
 
-            <div class="relative max-w-4xl mx-auto pl-8 sm:pl-10">
-                <div class="absolute left-[15px] sm:left-[19px] top-4 bottom-4 w-1 bg-gradient-to-b from-hrd via-purple-400 to-it rounded-full"></div>
+            <div class="relative max-w-4xl mx-auto pl-6 sm:pl-10">
+                <div class="absolute left-[11px] sm:left-[19px] top-4 bottom-4 w-1 bg-gradient-to-b from-hrd via-purple-400 to-it rounded-full"></div>
 
-                <div class="space-y-12">
+                <div class="space-y-8 md:space-y-12">
 
                     <div class="relative group cursor-pointer" onclick="openDetailModal(1)">
-                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-6 h-6 rounded-full bg-white border-4 border-hrd shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
-                        <div class="p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                                <span class="text-xs font-bold text-slate-400 font-jakarta">2021.03 - 2022.02</span>
+                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white border-4 border-hrd shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
+                        <div class="p-5 md:p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 md:mb-4">
+                                <span class="text-[10px] md:text-xs font-bold text-slate-400 font-jakarta">2021.03 - 2022.02</span>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] text-hrd font-bold">HRD 80%</span>
-                                    <div class="w-20 h-2 bg-gradient-to-r from-hrd via-rose-300 to-slate-200 rounded-full overflow-hidden dark:to-slate-700">
+                                    <span class="text-[9px] md:text-[10px] text-hrd font-bold">HRD 80%</span>
+                                    <div class="w-16 md:w-20 h-2 bg-gradient-to-r from-hrd via-rose-300 to-slate-200 rounded-full overflow-hidden dark:to-slate-700">
                                         <div class="h-full bg-hrd w-[80%] rounded-full"></div>
                                     </div>
-                                    <span class="text-[10px] text-slate-400 font-bold">IT 20%</span>
+                                    <span class="text-[9px] md:text-[10px] text-slate-400 font-bold">IT 20%</span>
                                 </div>
                             </div>
-                            <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-rose-500 transition-colors dark:text-slate-100 dark:group-hover:text-rose-400">사내 신입사원 디지털 리터러시 육성 과정 총괄 기획</h3>
-                            <p class="text-slate-600 text-sm mt-2 line-clamp-2 dark:text-slate-400">사내 디지털 전환(DX) 기조에 맞춰 신입사원 120명을 대상으로 오피스 자동화 및 기초 코딩 이해를 위한 교육 체계를 처음부터 설계하고 주도했습니다.</p>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400">#교육과정개발</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#DX_리터러시</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#컨설턴트질문있음</span>
+                            <h3 class="text-base md:text-lg font-extrabold text-slate-900 group-hover:text-rose-500 transition-colors dark:text-slate-100 dark:group-hover:text-rose-400">사내 신입사원 디지털 리터러시 육성 과정 총괄 기획</h3>
+                            <p class="text-slate-600 text-xs md:text-sm mt-2 line-clamp-2 dark:text-slate-400">사내 디지털 전환(DX) 기조에 맞춰 신입사원 120명을 대상으로 오피스 자동화 및 기초 코딩 이해를 위한 교육 체계를 처음부터 설계하고 주도했습니다.</p>
+                            <div class="mt-4 flex flex-wrap gap-1.5 md:gap-2">
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400">#교육과정개발</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#DX_리터러시</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#컨설턴트질문있음</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="relative group cursor-pointer" onclick="openDetailModal(2)">
-                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-6 h-6 rounded-full bg-white border-4 border-rose-400 shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
-                        <div class="p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                                <span class="text-xs font-bold text-slate-400 font-jakarta">2022.05 - 2023.04</span>
+                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white border-4 border-rose-400 shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
+                        <div class="p-5 md:p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 md:mb-4">
+                                <span class="text-[10px] md:text-xs font-bold text-slate-400 font-jakarta">2022.05 - 2023.04</span>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] text-hrd font-bold">HRD 60%</span>
-                                    <div class="w-20 h-2 bg-gradient-to-r from-hrd to-it rounded-full overflow-hidden">
+                                    <span class="text-[9px] md:text-[10px] text-hrd font-bold">HRD 60%</span>
+                                    <div class="w-16 md:w-20 h-2 bg-gradient-to-r from-hrd to-it rounded-full overflow-hidden">
                                         <div class="h-full bg-gradient-to-r from-hrd to-purple-400 w-[60%] rounded-full"></div>
                                     </div>
-                                    <span class="text-[10px] text-it font-bold">IT 40%</span>
+                                    <span class="text-[9px] md:text-[10px] text-it font-bold">IT 40%</span>
                                 </div>
                             </div>
-                            <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-purple-500 transition-colors dark:text-slate-100 dark:group-hover:text-purple-400">차세대 사내 LMS (학습관리시스템) 구축 태스크포스(TF) 리더</h3>
-                            <p class="text-slate-600 text-sm mt-2 line-clamp-2 dark:text-slate-400">기존의 낡은 사내 교육 전산망을 전면 폐기하고, 현대적인 에듀테크 기반의 신규 LMS 소프트웨어를 벤더사와 협력하여 성공적으로 연동 및 도입했습니다.</p>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400">#LMS연동</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#에듀테크벤더통제</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#UIUX테스트</span>
+                            <h3 class="text-base md:text-lg font-extrabold text-slate-900 group-hover:text-purple-500 transition-colors dark:text-slate-100 dark:group-hover:text-purple-400">차세대 사내 LMS (학습관리시스템) 구축 태스크포스(TF) 리더</h3>
+                            <p class="text-slate-600 text-xs md:text-sm mt-2 line-clamp-2 dark:text-slate-400">기존의 낡은 사내 교육 전산망을 전면 폐기하고, 현대적인 에듀테크 기반의 신규 LMS 소프트웨어를 벤더사와 협력하여 성공적으로 연동 및 도입했습니다.</p>
+                            <div class="mt-4 flex flex-wrap gap-1.5 md:gap-2">
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400">#LMS연동</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#에듀테크벤더통제</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#UIUX테스트</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="relative group cursor-pointer" onclick="openDetailModal(3)">
-                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-6 h-6 rounded-full bg-white border-4 border-purple-500 shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
-                        <div class="p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                                <span class="text-xs font-bold text-slate-400 font-jakarta">2023.06 - 2024.03</span>
+                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white border-4 border-purple-500 shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
+                        <div class="p-5 md:p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 md:mb-4">
+                                <span class="text-[10px] md:text-xs font-bold text-slate-400 font-jakarta">2023.06 - 2024.03</span>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] text-hrd font-bold">HRD 50%</span>
-                                    <div class="w-20 h-2 bg-gradient-to-r from-hrd via-purple-400 to-it rounded-full overflow-hidden">
+                                    <span class="text-[9px] md:text-[10px] text-hrd font-bold">HRD 50%</span>
+                                    <div class="w-16 md:w-20 h-2 bg-gradient-to-r from-hrd via-purple-400 to-it rounded-full overflow-hidden">
                                         <div class="h-full bg-gradient-to-r from-hrd via-purple-400 to-it w-[50%] rounded-full"></div>
                                     </div>
-                                    <span class="text-[10px] text-it font-bold">IT 50%</span>
+                                    <span class="text-[9px] md:text-[10px] text-it font-bold">IT 50%</span>
                                 </div>
                             </div>
-                            <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-purple-600 transition-colors dark:text-slate-100 dark:group-hover:text-purple-500">IT 기술 조직을 위한 '개발자 온보딩 가이드북 및 시스템' 기획</h3>
-                            <p class="text-slate-600 text-sm mt-2 line-clamp-2 dark:text-slate-400">외부 영입 시니어 및 주니어 개발자들이 회사에 빠르게 적응할 수 있도록 테크 온보딩 가이드를 기획하고, 이를 Jira와 Notion API를 활용하여 전산화했습니다.</p>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400">#테크온보딩</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#API자동화</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#조직문화빌딩</span>
+                            <h3 class="text-base md:text-lg font-extrabold text-slate-900 group-hover:text-purple-600 transition-colors dark:text-slate-100 dark:group-hover:text-purple-500">IT 기술 조직을 위한 '개발자 온보딩 가이드북 및 시스템' 기획</h3>
+                            <p class="text-slate-600 text-xs md:text-sm mt-2 line-clamp-2 dark:text-slate-400">외부 영입 시니어 및 주니어 개발자들이 회사에 빠르게 적응할 수 있도록 테크 온보딩 가이드를 기획하고, 이를 Jira와 Notion API를 활용하여 전산화했습니다.</p>
+                            <div class="mt-4 flex flex-wrap gap-1.5 md:gap-2">
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400">#테크온보딩</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#API자동화</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#조직문화빌딩</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="relative group cursor-pointer" onclick="openDetailModal(4)">
-                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-6 h-6 rounded-full bg-white border-4 border-blue-400 shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
-                        <div class="p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                                <span class="text-xs font-bold text-slate-400 font-jakarta">2024.05 - 2025.04</span>
+                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white border-4 border-blue-400 shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
+                        <div class="p-5 md:p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 md:mb-4">
+                                <span class="text-[10px] md:text-xs font-bold text-slate-400 font-jakarta">2024.05 - 2025.04</span>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] text-hrd font-bold">HRD 30%</span>
-                                    <div class="w-20 h-2 bg-gradient-to-r from-purple-300 via-blue-400 to-it rounded-full overflow-hidden">
+                                    <span class="text-[9px] md:text-[10px] text-hrd font-bold">HRD 30%</span>
+                                    <div class="w-16 md:w-20 h-2 bg-gradient-to-r from-purple-300 via-blue-400 to-it rounded-full overflow-hidden">
                                         <div class="h-full bg-gradient-to-r from-purple-400 to-it w-[30%] rounded-full"></div>
                                     </div>
-                                    <span class="text-[10px] text-it font-bold">IT 70%</span>
+                                    <span class="text-[9px] md:text-[10px] text-it font-bold">IT 70%</span>
                                 </div>
                             </div>
-                            <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-500 transition-colors dark:text-slate-100 dark:group-hover:text-blue-400">인적 자원 관리(HRM) 시스템 데이터 파이프라인 정합성 개선</h3>
-                            <p class="text-slate-600 text-sm mt-2 line-clamp-2 dark:text-slate-400">사내 전사 ERP 시스템 개편 시, 인사 평가 데이터 및 역량 마일리지 시스템이 충돌하는 문제를 데이터 정합성 개선 작업을 통해 해결하고, SQL 쿼리를 직접 모니터링했습니다.</p>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#HR_데이터분석</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#SQL</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#시스템이해</span>
+                            <h3 class="text-base md:text-lg font-extrabold text-slate-900 group-hover:text-blue-500 transition-colors dark:text-slate-100 dark:group-hover:text-blue-400">인적 자원 관리(HRM) 시스템 데이터 파이프라인 정합성 개선</h3>
+                            <p class="text-slate-600 text-xs md:text-sm mt-2 line-clamp-2 dark:text-slate-400">사내 전사 ERP 시스템 개편 시, 인사 평가 데이터 및 역량 마일리지 시스템이 충돌하는 문제를 데이터 정합성 개선 작업을 통해 해결하고, SQL 쿼리를 직접 모니터링했습니다.</p>
+                            <div class="mt-4 flex flex-wrap gap-1.5 md:gap-2">
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#HR_데이터분석</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#SQL</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300">#시스템이해</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="relative group cursor-pointer" onclick="openDetailModal(5)">
-                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-6 h-6 rounded-full bg-white border-4 border-it shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
-                        <div class="p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                                <span class="text-xs font-bold text-slate-400 font-jakarta">2025.07 - Present</span>
+                        <div class="absolute -left-[31px] sm:-left-[35px] top-6 w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white border-4 border-it shadow-md z-10 group-hover:scale-125 transition-transform dark:bg-slate-800"></div>
+                        <div class="p-5 md:p-6 rounded-2xl border border-slate-100 bg-white hover:shadow-lg transition-all-custom duration-300 transform hover:-translate-y-1 dark:bg-slate-800 dark:border-slate-700">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3 md:mb-4">
+                                <span class="text-[10px] md:text-xs font-bold text-slate-400 font-jakarta">2025.07 - Present</span>
                                 <div class="flex items-center gap-2">
-                                    <span class="text-[10px] text-hrd font-bold">HRD 20%</span>
-                                    <div class="w-20 h-2 bg-gradient-to-r from-blue-300 via-blue-500 to-it rounded-full overflow-hidden">
+                                    <span class="text-[9px] md:text-[10px] text-hrd font-bold">HRD 20%</span>
+                                    <div class="w-16 md:w-20 h-2 bg-gradient-to-r from-blue-300 via-blue-500 to-it rounded-full overflow-hidden">
                                         <div class="h-full bg-it w-[20%] rounded-full"></div>
                                     </div>
-                                    <span class="text-[10px] text-it font-bold">IT 80%</span>
+                                    <span class="text-[9px] md:text-[10px] text-it font-bold">IT 80%</span>
                                 </div>
                             </div>
-                            <h3 class="text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors dark:text-slate-100 dark:group-hover:text-blue-500">LLM 기반 사내 임직원 역량 평가 진단 서비스 POC 기획 및 구현</h3>
-                            <p class="text-slate-600 text-sm mt-2 line-clamp-2 dark:text-slate-400">사내 구성원들이 본인의 연차별 역량 성취도를 AI 에이전트와 대화하며 자연스럽게 진단받을 수 있는 파일럿 챗봇 웹 서비스를 AI 개발자와 협업하여 개발했습니다.</p>
-                            <div class="mt-4 flex flex-wrap gap-2">
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#Generative_AI</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#POC기획</span>
-                                <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400">#역량평가이론</span>
+                            <h3 class="text-base md:text-lg font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors dark:text-slate-100 dark:group-hover:text-blue-500">LLM 기반 사내 임직원 역량 평가 진단 서비스 POC 기획 및 구현</h3>
+                            <p class="text-slate-600 text-xs md:text-sm mt-2 line-clamp-2 dark:text-slate-400">사내 구성원들이 본인의 연차별 역량 성취도를 AI 에이전트와 대화하며 자연스럽게 진단받을 수 있는 파일럿 챗봇 웹 서비스를 AI 개발자와 협업하여 개발했습니다.</p>
+                            <div class="mt-4 flex flex-wrap gap-1.5 md:gap-2">
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#Generative_AI</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-blue-50 text-blue-600 dark:bg-blue-950/30 dark:text-blue-400">#POC기획</span>
+                                <span class="px-2 py-0.5 md:px-2.5 md:py-1 rounded-md text-[10px] md:text-xs font-medium bg-rose-50 text-rose-600 dark:bg-rose-950/30 dark:text-rose-400">#역량평가이론</span>
                             </div>
                         </div>
                     </div>
@@ -253,43 +259,43 @@
         </section>
 
 
-        <section id="personality" class="pt-6">
-            <div class="p-8 rounded-3xl border border-purple-100 bg-gradient-to-br from-indigo-50/50 via-purple-50/30 to-pink-50/50 shadow-inner dark:from-indigo-950/30 dark:via-purple-950/20 dark:to-pink-950/30 dark:border-purple-900/50">
-                <div class="grid md:grid-cols-12 gap-8 items-center">
-                    <div class="md:col-span-5 space-y-4">
+        <section id="personality" class="pt-4">
+            <div class="p-6 md:p-8 rounded-3xl border border-purple-100 bg-gradient-to-br from-indigo-50/50 via-purple-50/30 to-pink-50/50 shadow-inner dark:from-indigo-950/30 dark:via-purple-950/20 dark:to-pink-950/30 dark:border-purple-900/50">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center">
+                    <div class="md:col-span-5 space-y-3 md:space-y-4">
                         <span class="text-xs font-bold text-purple-600 tracking-wider uppercase dark:text-purple-400">My Core Personality</span>
-                        <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-slate-100">성향 분석: 두루뭉술함? 아니요, 유연한 '통역가'입니다.</h2>
-                        <p class="text-slate-600 text-sm leading-relaxed dark:text-slate-400">
+                        <h2 class="text-xl md:text-3xl font-extrabold text-slate-900 dark:text-slate-100 leading-tight">성향 분석: 두루뭉술함? 아니요, 유연한 '통역가'입니다.</h2>
+                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed dark:text-slate-400">
                             어떤 상황에서도 부드럽게 스며드는 저의 온화하고 유연한 태도는 협업에서 극상의 시너지를 냅니다. 기획자와 개발자, 비즈니스 부서와 개발 조직 사이에서 <strong>가장 뛰어난 중재 능력을 발휘하는 다리(Bridge)</strong>가 됩니다.
                         </p>
                     </div>
 
-                    <div class="md:col-span-7 space-y-4 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm dark:bg-slate-800 dark:border-slate-700">
-                        <h4 class="font-bold text-sm text-slate-900 mb-2 dark:text-slate-100">성격 및 협업 장점 레이더 (종합 성향)</h4>
+                    <div class="md:col-span-7 space-y-4 bg-white p-5 md:p-6 rounded-2xl border border-slate-100 shadow-sm dark:bg-slate-800 dark:border-slate-700">
+                        <h4 class="font-bold text-xs md:text-sm text-slate-900 mb-2 dark:text-slate-100">성격 및 협업 장점 레이더 (종합 성향)</h4>
                         
                         <div class="space-y-3">
                             <div class="space-y-1">
-                                <div class="flex justify-between text-xs font-semibold">
-                                    <span class="text-slate-700 dark:text-slate-300">이종 직군 간 번역 및 공감 능력 (Empathy)</span>
-                                    <span class="text-purple-600 font-bold dark:text-purple-400">95%</span>
+                                <div class="flex justify-between text-[11px] md:text-xs font-semibold gap-2">
+                                    <span class="text-slate-700 dark:text-slate-300 truncate">이종 직군 간 번역 및 공감 능력 (Empathy)</span>
+                                    <span class="text-purple-600 font-bold dark:text-purple-400 shrink-0">95%</span>
                                 </div>
                                 <div class="w-full h-2 bg-slate-100 rounded-full dark:bg-slate-700">
                                     <div class="h-full bg-gradient-to-r from-hrd to-purple-500 rounded-full" style="width: 95%"></div>
                                 </div>
                             </div>
                             <div class="space-y-1">
-                                <div class="flex justify-between text-xs font-semibold">
-                                    <span class="text-slate-700 dark:text-slate-300">상황과 역할 변화에 대한 적응력 (Adaptability)</span>
-                                    <span class="text-purple-600 font-bold dark:text-purple-400">90%</span>
+                                <div class="flex justify-between text-[11px] md:text-xs font-semibold gap-2">
+                                    <span class="text-slate-700 dark:text-slate-300 truncate">상황 and 역할 변화에 대한 적응력 (Adaptability)</span>
+                                    <span class="text-purple-600 font-bold dark:text-purple-400 shrink-0">90%</span>
                                 </div>
                                 <div class="w-full h-2 bg-slate-100 rounded-full dark:bg-slate-700">
                                     <div class="h-full bg-gradient-to-r from-purple-500 to-it rounded-full" style="width: 90%"></div>
                                 </div>
                             </div>
                             <div class="space-y-1">
-                                <div class="flex justify-between text-xs font-semibold">
-                                    <span class="text-slate-700 dark:text-slate-300">문제 상황을 차분하게 정리하는 논리력 (Logic)</span>
-                                    <span class="text-purple-600 font-bold dark:text-purple-400">80%</span>
+                                <div class="flex justify-between text-[11px] md:text-xs font-semibold gap-2">
+                                    <span class="text-slate-700 dark:text-slate-300 truncate">문제 상황을 차분하게 정리하는 논리력 (Logic)</span>
+                                    <span class="text-purple-600 font-bold dark:text-purple-400 shrink-0">80%</span>
                                 </div>
                                 <div class="w-full h-2 bg-slate-100 rounded-full dark:bg-slate-700">
                                     <div class="h-full bg-gradient-to-r from-it to-indigo-500 rounded-full" style="width: 80%"></div>
@@ -297,7 +303,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-4 p-3 rounded-lg bg-slate-50 border border-slate-100 text-xs text-slate-500 leading-relaxed dark:bg-slate-900 dark:border-slate-700 dark:text-slate-400">
+                        <div class="mt-4 p-3 rounded-lg bg-slate-50 border border-slate-100 text-[11px] text-slate-500 leading-relaxed dark:bg-slate-900 dark:border-slate-700 dark:text-slate-400">
                             💡 <strong>컨설턴트님을 위한 노트:</strong> 한 분야만 고집하기보다, 상황의 맥락을 빠르게 읽고 둥글둥글하게 타협과 합의를 도출해 내는 편입니다. 이런 제 성향에 비추어 볼 때 어떤 직무가 저의 경력과 결합되었을 때 가장 폭발적일까요?
                         </div>
                     </div>
@@ -307,10 +313,10 @@
 
     </main>
 
-    <footer class="bg-slate-900 text-slate-400 py-12 mt-24 dark:bg-slate-950">
+    <footer class="bg-slate-900 text-slate-400 py-8 md:py-12 mt-16 md:mt-24 dark:bg-slate-950">
         <div class="max-w-6xl mx-auto px-6 text-center space-y-4">
-            <span class="font-jakarta font-extrabold text-lg text-white bg-gradient-to-r from-rose-500 to-blue-500 bg-clip-text text-transparent">HYBRID.ME</span>
-            <p class="text-xs">© 2026 Career Portfolio Website. Prepared for Career Consulting.</p>
+            <span class="font-jakarta font-extrabold text-base md:text-lg text-white bg-gradient-to-r from-rose-500 to-blue-500 bg-clip-text text-transparent">HYBRID.ME</span>
+            <p class="text-[10px] md:text-xs">© 2026 Career Portfolio Website. Prepared for Career Consulting.</p>
         </div>
     </footer>
 
@@ -318,54 +324,75 @@
     <div id="detailModal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" onclick="closeDetailModal()"></div>
 
-        <div class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
-            <div class="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden transform transition-all duration-300 scale-95 opacity-0 dark:bg-slate-800 dark:border-slate-700" id="modalContent">
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+            <div class="relative w-full max-w-2xl bg-white rounded-2xl md:rounded-3xl shadow-2xl border border-slate-100 overflow-hidden transform transition-all duration-300 scale-95 opacity-0 dark:bg-slate-800 dark:border-slate-700" id="modalContent">
                 
                 <div id="modalHeaderBg" class="h-4 bg-gradient-to-r from-hrd to-it"></div>
 
-                <div class="p-8 space-y-6 max-h-[85vh] overflow-y-auto">
-                    <button onclick="closeDetailModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-full p-2 transition-colors dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-300">
+                <div class="p-5 md:p-8 space-y-6 max-h-[85vh] overflow-y-auto">
+                    <button onclick="closeDetailModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-full p-1.5 md:p-2 transition-colors dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-300">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
 
                     <div>
-                        <span id="modalDate" class="text-xs font-bold text-slate-400 font-jakarta">2021.03 - 2022.02</span>
-                        <h3 id="modalTitle" class="text-2xl font-extrabold text-slate-900 mt-1 dark:text-slate-100">사내 신입사원 디지털 리터러시 육성 과정 기획</h3>
+                        <span id="modalDate" class="text-[11px] md:text-xs font-bold text-slate-400 font-jakarta">2021.03 - 2022.02</span>
+                        <h3 id="modalTitle" class="text-xl md:text-2xl font-extrabold text-slate-900 mt-1 dark:text-slate-100 leading-snug">사내 신입사원 디지털 리터러시 육성 과정 기획</h3>
                     </div>
 
-                    <div class="space-y-4 border-y border-slate-100 py-6 dark:border-slate-700">
-                        <h4 class="font-bold text-slate-900 flex items-center gap-2 dark:text-slate-100">
+                    <div class="space-y-4 border-y border-slate-100 py-5 dark:border-slate-700">
+                        <h4 class="font-bold text-sm md:text-base text-slate-900 flex items-center gap-2 dark:text-slate-100">
                             🔎 상세 경험 분석 (STAR 기법)
                         </h4>
                         
-                        <div class="grid gap-4 text-sm text-slate-600 dark:text-slate-300">
+                        <div class="grid gap-3 text-xs md:text-sm text-slate-600 dark:text-slate-300">
                             <div class="p-3 bg-rose-50/50 rounded-xl border border-rose-100/50 dark:bg-rose-950/20 dark:border-rose-900/40">
                                 <strong class="text-rose-700 block mb-1 dark:text-rose-400">Situation (상황)</strong>
-                                <span id="starS">회사에 DX 바람이 불었으나, 현업 주니어들이 개발 지식이 부족해 IT 부서와의 협업 커뮤니케이션 장애 발생.</span>
+                                <span id="starS">...</span>
                             </div>
                             <div class="p-3 bg-blue-50/50 rounded-xl border border-blue-100/50 dark:bg-blue-950/20 dark:border-blue-900/40">
                                 <strong class="text-blue-700 block mb-1 dark:text-blue-400">Task (과제)</strong>
-                                <span id="starT">신입사원 교육을 총괄하여, 단순 프로그래밍 숙련이 아니라 IT 업무 메커니즘을 쉽게 체득할 수 있는 새로운 교육 커리큘럼 설계 요구됨.</span>
+                                <span id="starT">...</span>
                             </div>
                             <div class="p-3 bg-purple-50/50 rounded-xl border border-purple-100/50 dark:bg-purple-950/20 dark:border-purple-900/40">
                                 <strong class="text-purple-700 block mb-1 dark:text-purple-400">Action (행동)</strong>
-                                <span id="starA">실제 사내 IT 플랫폼의 API 연동 사례를 보드게임 형태로 단순화하여 비전공자도 이해할 수 있는 기획형 교육 프로그램 직접 설계 및 진행.</span>
+                                <span id="starA">...</span>
                             </div>
                             <div class="p-3 bg-emerald-50/50 rounded-xl border border-emerald-100/50 dark:bg-emerald-950/20 dark:border-emerald-900/40">
                                 <strong class="text-emerald-700 block mb-1 dark:text-emerald-400">Result (성과/배운점)</strong>
-                                <span id="starR">전년 대비 비전공자 신입사원 업무 만족도 30% 증가, IT 부서와 신입사원 간의 메일/협업 툴 마찰률 45% 감소 확인. HRD 기획에 실제 기술 이해를 얹었을 때 발휘되는 거대한 시너지를 체득함.</span>
+                                <span id="starR">...</span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-5 space-y-2 dark:bg-indigo-950/40 dark:border-indigo-900/50">
-                        <strong class="text-indigo-900 text-sm flex items-center gap-1.5 dark:text-indigo-400">
+                    <div class="bg-indigo-50/70 border border-indigo-100 rounded-2xl p-4 md:p-5 space-y-2 dark:bg-indigo-950/40 dark:border-indigo-900/50">
+                        <strong class="text-indigo-900 text-xs md:text-sm flex items-center gap-1.5 dark:text-indigo-400">
                             💬 컨설턴트님에게 묻고 싶습니다!
                         </strong>
                         <p id="modalQuestion" class="text-xs text-indigo-950 leading-relaxed dark:text-indigo-200">
-                            "이 성과는 단순 교육 기획(HRD) 성과로만 기술하는 것보다, 개발 조직으로 들어갈 수 있는 기획(PM) 역량의 증거로 삼아도 충분히 매력적일까요?"
+                            "..."
                         </p>
                     </div>
+
+                    <div class="pt-2 space-y-4">
+                        <h4 class="font-bold text-sm md:text-base text-slate-900 flex items-center gap-2 dark:text-slate-100">
+                            ✍️ 컨설턴트 코멘트 남기기
+                        </h4>
+                        
+                        <div class="space-y-2">
+                            <div class="grid grid-cols-2 gap-2">
+                                <input type="text" id="commenter-name" placeholder="컨설턴트명/이름" class="p-2 border border-slate-200 rounded-xl text-xs dark:bg-slate-700 dark:border-slate-600 dark:text-white outline-none focus:border-indigo-500">
+                                <input type="password" id="commenter-pw" placeholder="비밀번호(삭제용)" class="p-2 border border-slate-200 rounded-xl text-xs dark:bg-slate-700 dark:border-slate-600 dark:text-white outline-none focus:border-indigo-500">
+                            </div>
+                            <div class="flex gap-2">
+                                <textarea id="comment-content" rows="2" placeholder="이 성과에 대한 조언이나 코멘트를 남겨주세요." class="flex-1 p-2.5 border border-slate-200 rounded-xl text-xs dark:bg-slate-700 dark:border-slate-600 dark:text-white outline-none focus:border-indigo-500 resize-none"></textarea>
+                                <button onclick="addComment()" class="px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition shadow-md shrink-0">등록</button>
+                            </div>
+                        </div>
+
+                        <div id="comments-list" class="space-y-2 pt-2 divide-y divide-slate-100 dark:divide-slate-700">
+                            </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -373,13 +400,15 @@
 
 
     <script>
-        // Detail Mock Data for 5 timeline points
+        let currentTimelineId = null;
+
+        // Detail Mock Data
         const experiences = {
             1: {
                 date: "2021.03 - 2022.02",
                 title: "사내 신입사원 디지털 리터러시 육성 과정 총괄 기획",
                 gradient: "from-hrd to-rose-300",
-                s: "회사 내부에 전사적 디지털 전환(DX) 기조가 거세지면서 기존의 평범한 이메일 매너 등의 신입사원 직무 교육이 의미가 없어져가는 상황이었습니다.",
+                s: "회사 내부에 전사적 디지털 전환(DX) 기조가 거세지면서 기존의 평범한 직무 교육이 의미가 없어져가는 상황이었습니다.",
                 t: "IT 비전공자가 80% 이상인 신입 임직원들이 회사 내부의 IT 용어와 시스템 구성 방식을 직관적으로 이해할 수 있게 만드는 실효성 있는 실전 학습 체계 구축이 급선무였습니다.",
                 a: "현업 IT 개발팀과 사전 미팅을 6회 이상 진행하며 실제 비전공자들이 알아야 할 핵심 API 구조, 데이터 요청/응답 프로세스를 시각적인 카드와 시뮬레이션으로 제작하여 실습하게 했습니다.",
                 r: "신입 임직원 120명의 교육 수료 평점 4.8/5.0 달성. IT 개발 부서와 소통 장벽 해소에 실제적인 성과를 올렸으며, '교육과 기술의 조화'라는 강력한 인사이트를 얻었습니다.",
@@ -427,9 +456,7 @@
             }
         };
 
-        // =========================================================
-        // [리모컨 1] 다크모드 토글 기능 (실제 동작 로직 삽입)
-        // =========================================================
+        // 다크모드 토글
         const toggleBtn = document.getElementById('dark-mode-toggle');
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
@@ -437,9 +464,7 @@
             });
         }
 
-        // =========================================================
-        // [리모컨 2] 커스텀 마우스 커서 기능 (실제 동작 로직 삽입)
-        // =========================================================
+        // 커스텀 마우스 커서
         const cursor = document.getElementById('custom-cursor');
         if (cursor) {
             window.addEventListener('mousemove', (e) => {
@@ -448,10 +473,9 @@
             });
         }
 
-        // =========================================================
-        // [리모컨 3] 모달 팝업 제어 기능
-        // =========================================================
+        // 모달 제어
         function openDetailModal(id) {
+            currentTimelineId = id;
             const data = experiences[id];
             if (!data) return;
 
@@ -465,6 +489,8 @@
 
             const headerBg = document.getElementById('modalHeaderBg');
             headerBg.className = `h-4 bg-gradient-to-r ${data.gradient}`;
+
+            loadComments();
 
             const modal = document.getElementById('detailModal');
             const content = document.getElementById('modalContent');
@@ -484,12 +510,92 @@
             content.classList.add('scale-95', 'opacity-0');
             setTimeout(() => {
                 modal.classList.add('hidden');
+                currentTimelineId = null;
+                document.getElementById('commenter-name').value = '';
+                document.getElementById('commenter-pw').value = '';
+                document.getElementById('comment-content').value = '';
             }, 300);
         }
 
-        // =========================================================
-        // [리모컨 4] 제목 타이핑 효과
-        // =========================================================
+        // 로컬 스토리지 댓글 시스템
+        function loadComments() {
+            const listContainer = document.getElementById('comments-list');
+            listContainer.innerHTML = '';
+            
+            const allComments = JSON.parse(localStorage.getItem('portfolio_comments')) || {};
+            const currentComments = allComments[currentTimelineId] || [];
+
+            if (currentComments.length === 0) {
+                listContainer.innerHTML = `<p class="text-center text-xs text-slate-400 py-4">등록된 코멘트가 없습니다. 첫 조언을 남겨주세요!</p>`;
+                return;
+            }
+
+            currentComments.forEach((comment, index) => {
+                const item = document.createElement('div');
+                item.className = "py-3 flex justify-between items-start text-xs gap-4";
+                item.innerHTML = `
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-800 dark:text-slate-200">${comment.name}</span>
+                            <span class="text-[10px] text-slate-400">${comment.date}</span>
+                        </div>
+                        <p class="text-slate-600 dark:text-slate-400 break-all leading-relaxed">${comment.content}</p>
+                    </div>
+                    <button onclick="deleteComment(${index})" class="text-rose-400 hover:text-rose-600 font-medium tracking-tight shrink-0">삭제</button>
+                `;
+                listContainer.appendChild(item);
+            });
+        }
+
+        function addComment() {
+            const nameInput = document.getElementById('commenter-name');
+            const pwInput = document.getElementById('commenter-pw');
+            const contentInput = document.getElementById('comment-content');
+
+            if (!nameInput.value.trim() || !contentInput.value.trim()) {
+                alert("이름과 코멘트 내용을 모두 입력해 주세요!");
+                return;
+            }
+
+            const allComments = JSON.parse(localStorage.getItem('portfolio_comments')) || {};
+            if (!allComments[currentTimelineId]) {
+                allComments[currentTimelineId] = [];
+            }
+
+            const newComment = {
+                name: nameInput.value.trim(),
+                password: pwInput.value.trim(),
+                content: contentInput.value.trim(),
+                date: new Date().toLocaleDateString('ko-KR', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+            };
+
+            allComments[currentTimelineId].push(newComment);
+            localStorage.setItem('portfolio_comments', JSON.stringify(allComments));
+
+            contentInput.value = '';
+            loadComments();
+        }
+
+        function deleteComment(index) {
+            const allComments = JSON.parse(localStorage.getItem('portfolio_comments')) || {};
+            const currentComments = allComments[currentTimelineId] || [];
+            const targetComment = currentComments[index];
+
+            if (targetComment.password) {
+                const inputPw = prompt("댓글 작성 시 설정한 비밀번호를 입력하세요:");
+                if (inputPw !== targetComment.password) {
+                    alert("비밀번호가 일치하지 않습니다!");
+                    return;
+                }
+            }
+
+            currentComments.splice(index, 1);
+            allComments[currentTimelineId] = currentComments;
+            localStorage.setItem('portfolio_comments', JSON.stringify(allComments));
+            loadComments();
+        }
+
+        // 제목 타이핑 효과
         const typingText = document.getElementById('typing-text');
         const words = ["사람을 키우는 HRD 전문가", "세상을 움직이는 IT 개발자", "융합형 하이브리드 인재"];
         let wordIndex = 0;
@@ -517,7 +623,6 @@
                 wordIndex = (wordIndex + 1) % words.length;
                 typeSpeed = 500;
             } else {
-                // 글자를 쓰는 중이거나 지우는 중일 때 인덱스 증감 처리
                 if (!isDeleting) charIndex++;
             }
 
@@ -526,9 +631,7 @@
 
         window.addEventListener('DOMContentLoaded', typeEffect);
 
-        // =========================================================
-        // [리모컨 5] 배경 파티클 효과
-        // =========================================================
+        // 배경 파티클 효과
         const canvas = document.getElementById('particle-canvas');
         if (canvas) {
             const ctx = canvas.getContext('2d');
@@ -559,7 +662,6 @@
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    // 다크모드 여부에 따라 색상 다르게 처리
                     ctx.fillStyle = document.documentElement.classList.contains('dark') ? '#93c5fd' : '#4f46e5';
                     ctx.fill();
                 }
