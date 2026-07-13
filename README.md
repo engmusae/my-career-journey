@@ -6,8 +6,7 @@
 
 🔗 Live Demo
 
-웹사이트 링크: https://<YOUR-GITHUB-USERNAME>.github.io/<YOUR-REPOSITORY-NAME>/
-(배포 후 본인의 링크 주소로 수정하세요!)
+웹사이트 링크: [https://<YOUR-GITHUB-USERNAME>.github.io/<YOUR-REPOSITORY-NAME]
 
 ✨ 핵심 기능 (Key Features)
 
